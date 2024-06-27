@@ -72,8 +72,6 @@ func TestServer(t *testing.T) {
 		if res.Body.String() != data {
 			t.Errorf(`got "%s", want "%s"`, res.Body.String(), data)
 		}
-
-		// store.assertWasNotCancelled()
 	})
 	t.Run("tells store to cancel work if request is cancelled", func(t *testing.T) {
 		data := "hello, world"
