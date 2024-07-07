@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My Test Template Website</title>
+  </head>
+  <body>
+    <h1>Hello, world</h1>
+    <p id="description">Welcome to the hman's testing site</p>
+    <button onclick="updateDesc()">Click here</button>
+    <script>
+      function updateDesc() {
+        alert("BOOOOOOOOOMB");
+        var targetElem = document.getElementById("description");
+        targetElem.style = "color: blue; font-size: x-large";
+        targetElem.innerHTML =
+          "PRANKED! You're a sheep and you'll do what ya told";
+      }
+    </script>
+  </body>
+</html>
