@@ -8,8 +8,8 @@ import (
 )
 
 type StubPlayerStore struct {
-	scores		map[string]int
-	winCalls	[]string
+	scores   map[string]int
+	winCalls []string
 }
 
 func (s *StubPlayerStore) GetPlayerScore(name string) int {
@@ -37,7 +37,7 @@ func TestStoreWins(t *testing.T) {
 		server.ServeHTTP(response, request)
 
 		assertStatus(t, response.Code, http.StatusAccepted)
-	
+
 		if len(store.winCalls) != 1 {
 			t.Errorf("got %d calls to RecordWin want %d", len(store.winCalls), 1)
 		}
@@ -57,7 +57,7 @@ func TestGetPlayers(t *testing.T) {
 	store := StubPlayerStore{
 		map[string]int{
 			"Pepper": 20,
-			"Floyd": 10,
+			"Floyd":  10,
 		},
 		nil,
 	}
@@ -76,7 +76,7 @@ func TestGetPlayers(t *testing.T) {
 		response := httptest.NewRecorder()
 
 		server.ServeHTTP(response, request)
-		
+
 		assertStatus(t, response.Code, http.StatusOK)
 		assertResponseBody(t, response.Body.String(), "10")
 	})
@@ -90,10 +90,23 @@ func TestGetPlayers(t *testing.T) {
 	})
 }
 
+func TestLeague(t *testing.T) {
+	store := StubPlayerStore{}
+	server := &PlayerServer{&store}
+
+	t.Run("it returns 200 on /league", func(t *testing.T) {
+		request, _ := http.NewRequest(http.MethodGet, "/league", nil)
+		response := httptest.NewRecorder()
+
+		server.ServeHTTP(response, request)
+		assertStatus(t, response.Code, http.StatusOK)
+	})
+}
+
 func assertStatus(t testing.TB, got, want int) {
 	t.Helper()
 	if got != want {
-		t.Errorf("did not get corerct status, got %d, want %d", got , want)
+		t.Errorf("did not get correct status, got %d, want %d", got, want)
 	}
 }
 
